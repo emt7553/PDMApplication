@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class PrimaryController {
     
@@ -24,12 +25,25 @@ public class PrimaryController {
     
     private Connection connection;
     
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
-    private static final String DB_USER = "your_database_username";
-    private static final String DB_PASSWORD = "your_database_password";
+    //DONT SAVE USERNAME AND PASSWORD TO GITHUB
+    private static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/p320_19";
+    public static String DB_USER = "none";
+    public static String DB_PASSWORD = "none";
     
     public void initialize() {
         try {
+            Scanner scanner = new Scanner(System.in);
+        // Prompt the user for username
+        System.out.print("Enter username: ");
+        DB_USER = scanner.nextLine();
+
+        // Prompt the user for password
+        System.out.print("Enter password: ");
+        DB_PASSWORD = scanner.nextLine();
+
+        // Close the scanner
+        scanner.close();
+
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
