@@ -8,8 +8,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdmapplication.PrimaryController">
    <children>
-      <TextField fx:id="usernameField" layoutX="226.0" layoutY="125.0" promptText="Username" />
-      <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="172.0" promptText="Password" />
-      <Button layoutX="274.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+      <TextField fx:id="usernameField" layoutX="226.0" layoutY="80.0" promptText="Username" />
+      <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="140.0" promptText="Password" />
+      <TextField fx:id="newUsernameField" layoutX="226.0" layoutY="300.0" promptText="New Username" />
+      <PasswordField fx:id="newPasswordField" layoutX="226.0" layoutY="350.0" promptText="New Password" />
+      <Button layoutX="274.0" layoutY="390" mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
+      <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
    </children>
 </AnchorPane>
