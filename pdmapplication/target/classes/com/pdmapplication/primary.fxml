@@ -8,14 +8,18 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.pdmapplication.PrimaryController"
-            prefHeight="400.0" prefWidth="600.0">
-    <children>
-        <ListView fx:id="collectionsListView" layoutX="26.0" layoutY="22.0" prefHeight="355.0" prefWidth="255.0"/>
-        <Label fx:id="collectionInfoLabel" layoutX="307.0" layoutY="22.0" prefHeight="355.0" prefWidth="255.0"/>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdmapplication.PrimaryController">
+   <children>
+      <TextField fx:id="usernameField" layoutX="226.0" layoutY="80.0" promptText="Username" />
+      <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="140.0" promptText="Password" />
+      <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+
+      <!-- Add ListView for displaying collections -->
+      <ListView fx:id="collectionsListView" layoutX="226.0" layoutY="240.0" prefHeight="100.0" prefWidth="300.0" onMouseClicked="#handleCollectionSelection" />
+
+      <!-- Add Label for displaying collection information -->
+      <Label fx:id="collectionInfoLabel" layoutX="226.0" layoutY="360.0" prefHeight="30.0" prefWidth="300.0" />
+   </children>
 </AnchorPane>
 
 

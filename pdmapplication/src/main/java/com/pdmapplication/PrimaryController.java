@@ -237,67 +237,6 @@ public class PrimaryController {
     }
 }
 
-// package com.pdmapplication;
-
-// import javafx.event.ActionEvent;
-// import javafx.fxml.FXML;
-// import javafx.scene.control.Alert;
-// import javafx.scene.control.Label;
-// import javafx.scene.control.ListView;
-
-// public class PrimaryController {
-
-//     @FXML
-//     private ListView<String> collectionsListView;
-
-//     @FXML
-//     private Label collectionInfoLabel;
-
-//     public void initialize() {
-//         // Populate collections ListView with sample data
-//         populateCollectionsListView();
-//     }
-
-//     // replace sample code with actual data from backend
-//     private void populateCollectionsListView() {
-//         // Add sample collection names
-//         collectionsListView.getItems().addAll("Action Movies", "Comedy Movies", "Drama Movies");
-//     }
-
-//     @FXML
-//     private void handleCollectionSelection(ActionEvent event) {
-//         String selectedCollection = collectionsListView.getSelectionModel().getSelectedItem();
-//         if (selectedCollection != null) {
-//             displayCollectionInfo(selectedCollection);
-//         }
-//     }
-
-
-//     private void displayCollectionInfo(String collectionName) {
-//         // Sample implementation to display collection information
-//         collectionInfoLabel.setText("This is a sample collection: " + collectionName);
-//     }
-
-//     private void showAlert(Alert.AlertType type, String title, String content) {
-//         Alert alert = new Alert(type);
-//         alert.setTitle(title);
-//         alert.setContentText(content);
-//         alert.showAndWait();
-//     }
-// }
 
 
 
-// <!-- <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdmapplication.PrimaryController">
-//    <children>
-//       <TextField fx:id="usernameField" layoutX="226.0" layoutY="80.0" promptText="Username" />
-//       <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="140.0" promptText="Password" />
-//       <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-
-//       <!-- Add ListView for displaying collections -->
-//       <ListView fx:id="collectionsListView" layoutX="226.0" layoutY="240.0" prefHeight="100.0" prefWidth="300.0" onMouseClicked="#handleCollectionSelection" />
-
-//       <!-- Add Label for displaying collection information -->
-//       <Label fx:id="collectionInfoLabel" layoutX="226.0" layoutY="360.0" prefHeight="30.0" prefWidth="300.0" />
-//    </children>
-// </AnchorPane> -->
