@@ -39,7 +39,10 @@ public class PrimaryController {
     @FXML
     private PasswordField newPasswordField;
 
-    private Connection connection;
+    @FXML
+    private TextField newEmailField;
+
+    public Connection connection;
 
     // DONT SAVE USERNAME AND PASSWORD TO GITHUB
     private static final String DB_HOST = "127.0.0.1";
@@ -146,7 +149,7 @@ private void handleRegistration(ActionEvent event) {
     String newPassword = newPasswordField.getText().trim();
     String newLastName = ""; // Update with the new last name
     String newFirstName = ""; // Update with the new first name
-    String newEmail = ""; // Update with the new email
+    String newEmail = newEmailField.getText().trim(); // Update with the new email
     LocalDateTime currentTime = LocalDateTime.now();
 
     if (newUsername.isEmpty() || newPassword.isEmpty()) {
@@ -155,7 +158,8 @@ private void handleRegistration(ActionEvent event) {
     }
 
     try {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO usr (userid, lastname, firstname, username, password, email, creation, lastaccess) VALUES (1, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO usr (userid, lastname, firstname, username, password, email, creation, lastaccess) VALUES (3, ?, ?, ?, ?, ?, ?, ?)");
+
         statement.setString(1, newLastName);
         statement.setString(2, newFirstName);
         statement.setString(3, newUsername);
@@ -179,9 +183,9 @@ private void handleRegistration(ActionEvent event) {
 
 
     private void recordAccessTime(String username) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO usr(username, access_time) VALUES (?, ?)")) {
-            statement.setString(1, username);
-            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE usr SET lastaccess = ? WHERE username = ?")) {
+            statement.setString(2, username);
+            statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

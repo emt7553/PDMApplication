@@ -12,7 +12,9 @@
       <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="140.0" promptText="Password" />
       <TextField fx:id="newUsernameField" layoutX="226.0" layoutY="300.0" promptText="New Username" />
       <PasswordField fx:id="newPasswordField" layoutX="226.0" layoutY="350.0" promptText="New Password" />
-      <Button layoutX="274.0" layoutY="390" mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
+      <TextField fx:id="newEmailField" layoutX="226.0" layoutY="390.0" promptText="Email" />
+
+      <Button layoutX="274.0" layoutY="420" mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
       <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
    </children>
 </AnchorPane>
