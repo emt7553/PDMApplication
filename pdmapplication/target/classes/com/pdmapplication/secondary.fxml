@@ -9,7 +9,8 @@
     <children>
         <Label text="Secondary View" />
         <Button fx:id="secondaryButton" text="Follow Manager" onAction="#switchToFollowing" />
-
+        <Button fx:id="secondaryButton" text="Movies" onAction="#switchToMovie" />
+        <Button fx:id="secondaryButton" text="Collections" onAction="#switchToCollections" />
         <Button fx:id="secondaryButton" text="Log Out" onAction="#switchToPrimary" />
     </children>
     <padding>
