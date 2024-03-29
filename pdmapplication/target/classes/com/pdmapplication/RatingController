@@ -116,7 +116,6 @@ public class RatingController {
     }
     private void markAsWatched(int movieID, int userID) {
         try {
-            // Insert record into watches table
             PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO watches (userid, movieid, watchtime) VALUES (?, ?, ?)");
             insertStatement.setInt(1, userID);
             insertStatement.setInt(2, movieID);
