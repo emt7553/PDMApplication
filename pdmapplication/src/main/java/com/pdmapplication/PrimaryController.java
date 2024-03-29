@@ -22,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -158,45 +159,53 @@ private void handleLogin(ActionEvent event) {
 
 
     @FXML
-private void handleRegistration(ActionEvent event) {
-
-
+    private void handleRegistration(ActionEvent event) {
+        String newUsername = newUsernameField.getText().trim();
+        String newPassword = newPasswordField.getText().trim();
+        String newLastName = ""; // Update with the new last name
+        String newFirstName = ""; // Update with the new first name
+        String newEmail = newEmailField.getText().trim(); // Update with the new email
+        LocalDateTime currentTime = LocalDateTime.now();
     
-    String newUsername = newUsernameField.getText().trim();
-    String newPassword = newPasswordField.getText().trim();
-    String newLastName = ""; // Update with the new last name
-    String newFirstName = ""; // Update with the new first name
-    String newEmail = newEmailField.getText().trim(); // Update with the new email
-    LocalDateTime currentTime = LocalDateTime.now();
-
-    if (newUsername.isEmpty() || newPassword.isEmpty()) {
-        showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all fields.");
-        return;
-    }
-
-    try {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO usr (userid, lastname, firstname, username, password, email, creation, lastaccess) VALUES (3, ?, ?, ?, ?, ?, ?, ?)");
-
-        statement.setString(1, newLastName);
-        statement.setString(2, newFirstName);
-        statement.setString(3, newUsername);
-        statement.setString(4, newPassword);
-        statement.setString(5, newEmail);
-        statement.setTimestamp(6, Timestamp.valueOf(currentTime));
-        statement.setTimestamp(7, Timestamp.valueOf(currentTime));
-
-        int rowsInserted = statement.executeUpdate();
-
-        if (rowsInserted > 0) {
-            showAlert(Alert.AlertType.INFORMATION, "Success", "User registered successfully!");
-        } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to register user.");
+        if (newUsername.isEmpty() || newPassword.isEmpty() || newEmail.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Please fill in all fields.");
+            return;
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to register user.");
+    
+        try {
+            // Insert user details into usr table
+            PreparedStatement userStatement = connection.prepareStatement("INSERT INTO usr (lastname, firstname, username, password, creation, lastaccess) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            userStatement.setString(1, newLastName);
+            userStatement.setString(2, newFirstName);
+            userStatement.setString(3, newUsername);
+            userStatement.setString(4, newPassword);
+            userStatement.setTimestamp(5, Timestamp.valueOf(currentTime));
+            userStatement.setTimestamp(6, Timestamp.valueOf(currentTime));
+    
+            int rowsInserted = userStatement.executeUpdate();
+    
+            if (rowsInserted > 0) {
+                // Get the generated user ID
+                ResultSet generatedKeys = userStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int userId = generatedKeys.getInt(1);
+                    // Insert email into emails table
+                    PreparedStatement emailStatement = connection.prepareStatement("INSERT INTO emails (userid, email) VALUES (?, ?)");
+                    emailStatement.setInt(1, userId);
+                    emailStatement.setString(2, newEmail);
+                    emailStatement.executeUpdate();
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "User registered successfully!");
+                }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to register user.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to register user.");
+        }
     }
-}
+    
+
 
 
     private void recordAccessTime(String username) {
