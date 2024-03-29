@@ -12,6 +12,8 @@
                <children>
                   <Button fx:id="addButton" mnemonicParsing="false" text="Add" onAction="#handleAddButtonAction" />
                   <Button fx:id="removeButton" mnemonicParsing="false" text="Remove" onAction="#handleRemoveButtonAction" />
+                  <Button fx:id="secondaryButton" text="Back" onAction="#switchToSecondary" />
+
                </children>
             </HBox>
          </children>

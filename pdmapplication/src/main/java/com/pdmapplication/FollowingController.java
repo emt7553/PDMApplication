@@ -133,7 +133,22 @@ private void handleRemoveButtonAction() {
         showAlert(Alert.AlertType.ERROR, "Database Error", "User not found.");
     }
 }
+@FXML
+private void switchToSecondary(ActionEvent event) throws IOException {
+    SecondaryController secondaryController = new SecondaryController(connection);
 
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+    loader.setController(secondaryController);
+
+    Parent root = loader.load();
+
+    // Create a new scene for the primary view
+    Scene scene = new Scene(root);
+
+    // Get the current stage and set its scene to the primary view scene
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stage.setScene(scene);
+}
 
     @FXML
     private void showAlert(Alert.AlertType type, String title, String content) {
