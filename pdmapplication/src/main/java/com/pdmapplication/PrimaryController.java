@@ -52,7 +52,7 @@ public class PrimaryController {
     private Label collectionInfoLabel;
 
     public Connection connection;
-
+    public static int currentUserId;
     // DONT SAVE USERNAME AND PASSWORD TO GITHUB
     private static final String DB_HOST = "127.0.0.1";
     private static final int DB_PORT = 5432;
@@ -62,6 +62,7 @@ public class PrimaryController {
     private static String SSH_PASSWORD = "none";
     private static String DB_USER = "none";
     private static String DB_PASSWORD = "none";
+    
 
     public void initialize() {
         try {
@@ -90,7 +91,8 @@ public class PrimaryController {
             }
 
             populateCollectionsListView();
-
+            
+            
         } catch (ClassNotFoundException | SQLException | JSchException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database Error", "Could not connect to the database.");
@@ -127,11 +129,15 @@ private void handleLogin(ActionEvent event) {
 
         if (resultSet.next()) {
             // Login successful
+            currentUserId = resultSet.getInt("userid");
             recordAccessTime(username);
             showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
 
             // Load the secondary view
+            SecondaryController secondaryController = new SecondaryController(connection);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+            loader.setController(secondaryController);
+            
             Parent root = loader.load();
 
             // Create a new scene for the secondary view
