@@ -43,6 +43,7 @@ public class FollowingController {
     private Button removeButton;
 
     private Connection connection;
+    
     public FollowingController(Connection connection) {
         this.connection = connection;
     }

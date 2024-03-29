@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pdmapplication.CollectionController">
+   <children>
+      <ListView fx:id="moviesListView" layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0" />
+      <TextField fx:id="searchField" layoutX="50.0" layoutY="370.0" prefWidth="300.0" promptText="Search Movies" />
+      <Button layoutX="380.0" layoutY="370.0" mnemonicParsing="false" onAction="#searchMovies" text="Search" />
+      <ChoiceBox fx:id="sortByChoiceBox" layoutX="470.0" layoutY="370.0" prefWidth="150.0">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Movie Name" />
+               <String fx:value="Studio" />
+               <String fx:value="Genre" />
+               <String fx:value="Release Year (Ascending)" />
+               <String fx:value="Release Year (Descending)" />
+            </FXCollections>
+         </items>
+      </ChoiceBox>
+   </children>
+</AnchorPane>

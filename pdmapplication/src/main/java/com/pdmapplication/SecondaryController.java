@@ -45,4 +45,20 @@ public class SecondaryController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
+    @FXML
+    private void switchToCollection(ActionEvent event) throws IOException {
+        CollectionController collectionController = new CollectionController(connection);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("collection.fxml"));
+        loader.setController(collectionController);
+
+        Parent root = loader.load();
+
+        // Create a new scene for the collection view
+        Scene scene = new Scene(root);
+
+        // Get the current stage and set its scene to the collection view scene
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
 }
