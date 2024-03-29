@@ -63,7 +63,7 @@ private void handleAddButtonAction() {
 
     try {
         // Find user by email
-        PreparedStatement findUserStatement = connection.prepareStatement("SELECT userid FROM usr WHERE email = ?");
+        PreparedStatement findUserStatement = connection.prepareStatement("SELECT user_id FROM emails WHERE email = ?");
         findUserStatement.setString(1, email);
         ResultSet userResultSet = findUserStatement.executeQuery();
 
@@ -72,10 +72,10 @@ private void handleAddButtonAction() {
             int currentUserId = PrimaryController.currentUserId; // Change this line according to your implementation
 
             // Found user's ID
-            int foundUserId = userResultSet.getInt("userid");
+            int foundUserId = userResultSet.getInt("user_id");
 
             // Insert into the friendswith table
-            PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO friendswith (frienderid, friendeeid) VALUES (?, ?)");
+            PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO friendswith (friender_id, friendee_id) VALUES (?, ?)");
             insertStatement.setInt(1, currentUserId);
             insertStatement.setInt(2, foundUserId);
             insertStatement.executeUpdate();
@@ -101,7 +101,7 @@ private void handleRemoveButtonAction() {
 
     try {
         // Find user by email
-        PreparedStatement findUserStatement = connection.prepareStatement("SELECT userid FROM usr WHERE email = ?");
+        PreparedStatement findUserStatement = connection.prepareStatement("SELECT user_id FROM emails WHERE email = ?");
         findUserStatement.setString(1, email);
         ResultSet userResultSet = findUserStatement.executeQuery();
 
@@ -110,10 +110,10 @@ private void handleRemoveButtonAction() {
             int currentUserId = PrimaryController.currentUserId; // Change this line according to your implementation
 
             // Found user's ID
-            int foundUserId = userResultSet.getInt("userid");
+            int foundUserId = userResultSet.getInt("user_id");
 
             // Remove from the friendswith table
-            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM friendswith WHERE (frienderid = ? AND friendeeid = ?) OR (frienderid = ? AND friendeeid = ?)");
+            PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM friendswith WHERE (friender_id = ? AND friendee_id = ?) OR (friender_id = ? AND friendee_id = ?)");
             deleteStatement.setInt(1, currentUserId);
             deleteStatement.setInt(2, foundUserId);
             deleteStatement.setInt(3, foundUserId);

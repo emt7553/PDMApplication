@@ -45,4 +45,20 @@ public class SecondaryController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
+    @FXML
+    private void switchToMovie(ActionEvent event) throws IOException {
+        MovieController movieController = new MovieController(connection);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("movie.fxml"));
+        loader.setController(movieController);
+
+        Parent root = loader.load();
+
+        // Create a new scene for the following view
+        Scene scene = new Scene(root);
+
+        // Get the current stage and set its scene to the following view scene
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
 }

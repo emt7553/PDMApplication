@@ -129,7 +129,7 @@ private void handleLogin(ActionEvent event) {
 
         if (resultSet.next()) {
             // Login successful
-            currentUserId = resultSet.getInt("userid");
+            currentUserId = resultSet.getInt("user_id");
             recordAccessTime(username);
             showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
 
@@ -175,7 +175,7 @@ private void handleRegistration(ActionEvent event) {
     }
 
     try {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO usr (userid, lastname, firstname, username, password, email, creation, lastaccess) VALUES (3, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO usr (user_id, lastname, firstname, username, password, email, creation, lastaccess) VALUES (3, ?, ?, ?, ?, ?, ?, ?)");
 
         statement.setString(1, newLastName);
         statement.setString(2, newFirstName);
@@ -222,7 +222,7 @@ private void handleRegistration(ActionEvent event) {
 
 private void populateCollectionsListView() {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT collectionName FROM COLLECTION JOIN createsCollection ON COLLECTION.collectionID = createsCollection.collectionID WHERE createsCollection.userID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT collectionName FROM COLLECTION JOIN createsCollection ON COLLECTION.collectionID = createsCollection.collectionID WHERE createsCollection.user_ID = ?");
             statement.setString(1, DB_USER);
             ResultSet resultSet = statement.executeQuery();
 
