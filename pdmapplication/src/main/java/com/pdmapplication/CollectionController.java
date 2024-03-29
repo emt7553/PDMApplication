@@ -77,7 +77,7 @@ public class CollectionController {
         result.ifPresent(collectionName -> {
             try {
                 // Insert the new collection into the database
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO collection (collectionid, collectionname) VALUES (1,?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO collection (collection_id, collectionname) VALUES (1,?)");
                 statement.setString(1, collectionName);
                 int rowsInserted = statement.executeUpdate();
 
