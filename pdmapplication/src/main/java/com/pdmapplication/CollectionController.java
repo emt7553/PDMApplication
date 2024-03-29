@@ -2,7 +2,6 @@ package com.pdmapplication;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -24,8 +23,8 @@ public class CollectionController {
     @FXML
     private TextField searchField;
 
-    @FXML
-    private ChoiceBox<String> sortByChoiceBox;
+    // @FXML
+    // private ChoiceBox<String> sortByChoiceBox;
 
     private Connection connection;
 
@@ -225,103 +224,6 @@ public class CollectionController {
         }
     }
 
-    // Method to populate movies list view based on search criteria and sorting
-    @FXML
-    private void populateMoviesListView() {
-        moviesListView.getItems().clear(); // Clear the list view before populating
-
-        try {
-            // Construct the SQL query based on the selected sorting criteria
-            String query = "SELECT * FROM Movie ORDER BY";
-            switch (sortByChoiceBox.getValue()) {
-                case "Movie Name":
-                    query += " movieName";
-                    break;
-                case "Studio":
-                    query += " studio";
-                    break;
-                case "Genre":
-                    query += " genre";
-                    break;
-                case "Release Year (Ascending)":
-                    query += " releaseYear ASC";
-                    break;
-                case "Release Year (Descending)":
-                    query += " releaseYear DESC";
-                    break;
-                default:
-                    query += " movieName"; // Default sorting by movie name
-            }
-
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String movieName = resultSet.getString("movieName");
-                String castMembers = resultSet.getString("castMembers");
-                String director = resultSet.getString("director");
-                int length = resultSet.getInt("length");
-                String mpaaRating = resultSet.getString("mpaaRating");
-                double userRating = resultSet.getDouble("userRating");
-
-                // Construct the string representation of movie information
-                String movieInfo = String.format("%s | Cast: %s | Director: %s | Length: %d min | MPAA Rating: %s | User Rating: %.1f",
-                        movieName, castMembers, director, length, mpaaRating, userRating);
-                moviesListView.getItems().add(movieInfo);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to fetch movies.");
-        }
-    }
-
-    @FXML
-    private void searchMovies() {
-        String searchTerm = searchField.getText().trim();
-
-        if (searchTerm.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please enter a search term.");
-            return;
-        }
-
-        moviesListView.getItems().clear(); // Clear the list view before populating
-
-        try {
-            String query = "SELECT * FROM Movie WHERE movieName LIKE ? OR releaseYear LIKE ? OR castMembers LIKE ? OR studio LIKE ? OR genre LIKE ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, "%" + searchTerm + "%"); // Movie Name
-            statement.setString(2, "%" + searchTerm + "%"); // Release Year
-            statement.setString(3, "%" + searchTerm + "%"); // Cast Members
-            statement.setString(4, "%" + searchTerm + "%"); // Studio
-            statement.setString(5, "%" + searchTerm + "%"); // Genre
-
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String movieName = resultSet.getString("movieName");
-                String castMembers = resultSet.getString("castMembers");
-                String director = resultSet.getString("director");
-                int length = resultSet.getInt("length");
-                String mpaaRating = resultSet.getString("mpaaRating");
-                double userRating = resultSet.getDouble("userRating");
-
-                // Construct the string representation of movie information
-                String movieInfo = String.format("%s | Cast: %s | Director: %s | Length: %d min | MPAA Rating: %s | User Rating: %.1f",
-                        movieName, castMembers, director, length, mpaaRating, userRating);
-                moviesListView.getItems().add(movieInfo);
-            }
-
-            if (moviesListView.getItems().isEmpty()) {
-                showAlert(Alert.AlertType.INFORMATION, "No Results", "No movies found matching the search criteria.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to search for movies.");
-        }
-    }
-
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -329,3 +231,8 @@ public class CollectionController {
         alert.showAndWait();
     }
 }
+
+
+
+
+   
