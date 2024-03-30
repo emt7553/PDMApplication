@@ -1,3 +1,4 @@
+//Author: Alex Tefft
 package com.pdmapplication;
 
 import javafx.beans.property.DoubleProperty;
@@ -70,7 +71,6 @@ public class MovieController {
     private ObservableList<Movie> movies = FXCollections.observableArrayList();
 
     public void initialize() {
-        // Set up table columns
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         castColumn.setCellValueFactory(cellData -> cellData.getValue().castProperty());
@@ -80,17 +80,15 @@ public class MovieController {
         userRatingColumn.setCellValueFactory(cellData -> cellData.getValue().userRatingProperty().asObject());
         releaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().releaseDateProperty());
 
-        // Populate the table
         movieTable.setItems(movies);
     }
 
     @FXML
     private void search() {
         String searchQuery = searchField.getText().trim();
-        movies.clear(); // Clear existing movies
+        movies.clear(); 
 
         try {
-            // Construct the SQL query based on the search query
             String sqlQuery = "SELECT m.movie_id, m.title, STRING_AGG(a.name, ', ') AS cast, c.name AS director, m.length, m.mpaa_rating, ra.starrating, r.release_year " +
                     "FROM movie m " +
                     "LEFT JOIN (SELECT movie_id, STRING_AGG(name, ', ') AS name FROM actor a INNER JOIN contributor ac ON a.contributor_id = ac.id GROUP BY movie_id) a ON m.movie_id = a.movie_id " +
@@ -107,29 +105,24 @@ public class MovieController {
 
             ResultSet resultSet = statement.executeQuery();
 
-            // Add the retrieved movies to the movies list
             while (resultSet.next()) {
                 int movieid = resultSet.getInt("movie_id");
                 String title = resultSet.getString("title");
-                String cast = resultSet.getString("cast"); // Adjusted to match the column alias from the SQL query
-                String director = resultSet.getString("director"); // Adjusted to match the column alias from the SQL query
+                String cast = resultSet.getString("cast");
+                String director = resultSet.getString("director"); 
                 int length = resultSet.getInt("length");
                 String mpaaRating = resultSet.getString("mpaa_rating");
-                double userRating = resultSet.getDouble("starrating"); // Adjusted to match the column alias from the SQL query
+                double userRating = resultSet.getDouble("starrating"); 
                 String releaseDate = resultSet.getString("release_year");
 
                 Movie movie = new Movie(movieid, title, cast, director, length, mpaaRating, userRating, releaseDate);
                 movies.add(movie);
             }
-
-            // Update the TableView
             movieTable.setItems(movies);
-
             statement.close();
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle SQL exception
         }
     }
 
@@ -145,11 +138,9 @@ public class MovieController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        // Get the current stage and set its scene to the following view scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
 
-        // Close the current window
     } catch (IOException e) {
         e.printStackTrace();
     }
@@ -217,10 +208,8 @@ private void switchToSecondary(ActionEvent event) throws IOException {
 
     Parent root = loader.load();
 
-    // Create a new scene for the primary view
     Scene scene = new Scene(root);
 
-    // Get the current stage and set its scene to the primary view scene
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
 }
