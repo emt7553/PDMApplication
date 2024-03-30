@@ -1,3 +1,5 @@
+//Author: Alex Tefft
+
 package com.pdmapplication;
 
 import com.jcraft.jsch.JSch;
@@ -26,7 +28,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 public class PrimaryController {
@@ -54,7 +55,7 @@ public class PrimaryController {
 
     public Connection connection;
     public static int currentUserId;
-    // DONT SAVE USERNAME AND PASSWORD TO GITHUB
+    // DON'T SAVE USERNAME AND PASSWORD TO GITHUB
     private static final String DB_HOST = "127.0.0.1";
     private static final int DB_PORT = 5432;
     private static final String SSH_HOST = "starbug.cs.rit.edu";
@@ -67,15 +68,12 @@ public class PrimaryController {
 
     public void initialize() {
         try {
-            // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
 
             try (Scanner scanner = new Scanner(System.in)) {
-                // Prompt the user for username
                 System.out.print("Enter username: ");
                 DB_USER = scanner.nextLine();
                 SSH_USER = DB_USER;
-                // Prompt the user for password
                 System.out.print("Enter password: ");
                 DB_PASSWORD = scanner.nextLine();
                 SSH_PASSWORD = DB_PASSWORD;
@@ -128,22 +126,18 @@ private void handleLogin(ActionEvent event) {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            // Login successful
             currentUserId = resultSet.getInt("user_id");
             recordAccessTime(username);
             showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
 
-            // Load the secondary view
             SecondaryController secondaryController = new SecondaryController(connection);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
             loader.setController(secondaryController);
             
             Parent root = loader.load();
 
-            // Create a new scene for the secondary view
             Scene scene = new Scene(root);
 
-            // Get the current stage and set its scene to the secondary view scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
         } else {
@@ -161,9 +155,9 @@ private void handleLogin(ActionEvent event) {
     private void handleRegistration(ActionEvent event) {
         String newUsername = newUsernameField.getText().trim();
         String newPassword = newPasswordField.getText().trim();
-        String newLastName = ""; // Update with the new last name
-        String newFirstName = ""; // Update with the new first name
-        String newEmail = newEmailField.getText().trim(); // Update with the new email
+        String newLastName = ""; 
+        String newFirstName = ""; 
+        String newEmail = newEmailField.getText().trim();
         LocalDateTime currentTime = LocalDateTime.now();
     
         if (newUsername.isEmpty() || newPassword.isEmpty() || newEmail.isEmpty()) {
@@ -172,7 +166,6 @@ private void handleLogin(ActionEvent event) {
         }
     
         try {
-            // Insert user details into usr table
             PreparedStatement userStatement = connection.prepareStatement("INSERT INTO usr (lastname, firstname, username, password, creation, lastaccess) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             userStatement.setString(1, newLastName);
             userStatement.setString(2, newFirstName);
@@ -184,11 +177,9 @@ private void handleLogin(ActionEvent event) {
             int rowsInserted = userStatement.executeUpdate();
     
             if (rowsInserted > 0) {
-                // Get the generated user ID
                 ResultSet generatedKeys = userStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int userId = generatedKeys.getInt(1);
-                    // Insert email into emails table
                     PreparedStatement emailStatement = connection.prepareStatement("INSERT INTO emails (user_id, email) VALUES (?, ?)");
                     emailStatement.setInt(1, userId);
                     emailStatement.setString(2, newEmail);

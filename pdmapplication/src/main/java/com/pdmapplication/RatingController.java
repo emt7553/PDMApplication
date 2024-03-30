@@ -1,16 +1,15 @@
+//Author: Alex Tefft
+
 package com.pdmapplication;
 
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -18,19 +17,13 @@ import javafx.scene.Node;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Scanner;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+
 
 
 public class RatingController {
@@ -53,7 +46,6 @@ public class RatingController {
 
     @FXML
     public void initialize() {
-        // Initialize method, you can add initialization code here if needed
     }
 
     public void setMovieID(int movieID) {
@@ -99,12 +91,10 @@ public class RatingController {
         try {
             int currentUserId = PrimaryController.currentUserId;
 
-            // Retrieve movies in the collection from the contains table
             PreparedStatement containsStatement = connection.prepareStatement("SELECT movie_id FROM contains WHERE collection_id = ?");
             containsStatement.setInt(1, collectionID);
             ResultSet resultSet = containsStatement.executeQuery();
 
-            // Iterate through each movie in the collection and mark it as watched
             while (resultSet.next()) {
                 int movieID = resultSet.getInt("movie_id");
                 markAsWatched(movieID, currentUserId);
@@ -150,10 +140,8 @@ private void switchToSecondary(ActionEvent event) throws IOException {
 
     Parent root = loader.load();
 
-    // Create a new scene for the primary view
     Scene scene = new Scene(root);
 
-    // Get the current stage and set its scene to the primary view scene
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
 }

@@ -1,3 +1,5 @@
+//Author: Alex Tefft
+
 package com.pdmapplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,10 +24,8 @@ public class SecondaryController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
         Parent root = loader.load();
 
-        // Create a new scene for the primary view
         Scene scene = new Scene(root);
 
-        // Get the current stage and set its scene to the primary view scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
@@ -38,10 +38,8 @@ public class SecondaryController {
 
         Parent root = loader.load();
 
-        // Create a new scene for the following view
         Scene scene = new Scene(root);
 
-        // Get the current stage and set its scene to the following view scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
@@ -54,14 +52,11 @@ public class SecondaryController {
 
         Parent root = loader.load();
 
-        // Create a new scene for the following view
         Scene scene = new Scene(root);
 
-        // Get the current stage and set its scene to the following view scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
-    //replace later
     @FXML
     private void switchToCollections(ActionEvent event) throws IOException {
         MovieController movieController = new MovieController(connection);
@@ -70,10 +65,8 @@ public class SecondaryController {
 
         Parent root = loader.load();
 
-        // Create a new scene for the following view
         Scene scene = new Scene(root);
 
-        // Get the current stage and set its scene to the following view scene
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }

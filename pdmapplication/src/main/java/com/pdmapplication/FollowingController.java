@@ -1,36 +1,25 @@
+//Author: Alex Tefft
+
 package com.pdmapplication;
 
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Scanner;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+
 
 public class FollowingController {
     @FXML
@@ -50,7 +39,6 @@ public class FollowingController {
 
     @FXML
     public void initialize() {
-        // Initialize method, you can add initialization code here if needed
     }
 
     @FXML
@@ -62,19 +50,15 @@ private void handleAddButtonAction() {
     }
 
     try {
-        // Find user by email
         PreparedStatement findUserStatement = connection.prepareStatement("SELECT user_id FROM emails WHERE email = ?");
         findUserStatement.setString(1, email);
         ResultSet userResultSet = findUserStatement.executeQuery();
 
         if (userResultSet.next()) {
-            // Current user's ID (assuming you have it available in your controller)
-            int currentUserId = PrimaryController.currentUserId; // Change this line according to your implementation
+            int currentUserId = PrimaryController.currentUserId; 
 
-            // Found user's ID
             int foundUserId = userResultSet.getInt("user_id");
 
-            // Insert into the friendswith table
             PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO friendswith (friender_id, friendee_id) VALUES (?, ?)");
             insertStatement.setInt(1, currentUserId);
             insertStatement.setInt(2, foundUserId);
@@ -100,19 +84,16 @@ private void handleRemoveButtonAction() {
     }
 
     try {
-        // Find user by email
+
         PreparedStatement findUserStatement = connection.prepareStatement("SELECT user_id FROM emails WHERE email = ?");
         findUserStatement.setString(1, email);
         ResultSet userResultSet = findUserStatement.executeQuery();
 
         if (userResultSet.next()) {
-            // Current user's ID (assuming you have it available in your controller)
-            int currentUserId = PrimaryController.currentUserId; // Change this line according to your implementation
+            int currentUserId = PrimaryController.currentUserId; 
 
-            // Found user's ID
             int foundUserId = userResultSet.getInt("user_id");
 
-            // Remove from the friendswith table
             PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM friendswith WHERE (friender_id = ? AND friendee_id = ?) OR (friender_id = ? AND friendee_id = ?)");
             deleteStatement.setInt(1, currentUserId);
             deleteStatement.setInt(2, foundUserId);
@@ -139,13 +120,8 @@ private void switchToSecondary(ActionEvent event) throws IOException {
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
     loader.setController(secondaryController);
-
     Parent root = loader.load();
-
-    // Create a new scene for the primary view
     Scene scene = new Scene(root);
-
-    // Get the current stage and set its scene to the primary view scene
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
 }
