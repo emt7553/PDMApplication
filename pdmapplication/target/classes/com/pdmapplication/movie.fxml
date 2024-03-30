@@ -1,24 +1,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            >
-    
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+
     <top>
-        <HBox spacing="10" padding="$Insets { top: 10, right: 10, bottom: 10, left: 10 }">
+        <HBox spacing="10">
             <Label text="Search: "/>
             <TextField fx:id="searchField"/>
             <Button text="Search" onAction="#search"/>
         </HBox>
     </top>
-    
+
     <center>
         <TableView fx:id="movieTable" prefWidth="800" prefHeight="600">
             <columns>
+                <TableColumn text="ID" fx:id="idColumn"/>
                 <TableColumn text="Title" fx:id="titleColumn"/>
                 <TableColumn text="Cast" fx:id="castColumn"/>
                 <TableColumn text="Director" fx:id="directorColumn"/>
@@ -29,15 +26,14 @@
             </columns>
         </TableView>
     </center>
-    
+
     <bottom>
-        <HBox spacing="10" padding="$Insets { top: 10, right: 10, bottom: 10, left: 10 }">            
-            <Label text="Sort By: "/>
-            <ChoiceBox fx:id="sortByChoiceBox" prefWidth="150"/>
-            <Label text="Sort Order: "/>
-            <ChoiceBox fx:id="sortOrderChoiceBox" prefWidth="150"/>
-            <Button text="Sort" onAction="#sort"/>
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Enter Movie ID: "/>
+            <TextField fx:id="movieIdField"/>
+            <Button text="Select" onAction="#selectMovieById"/>
+            <Button fx:id="secondaryButton" text="Back" onAction="#switchToSecondary" />
+
         </HBox>
     </bottom>
-    
 </BorderPane>

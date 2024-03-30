@@ -91,7 +91,6 @@ public class PrimaryController {
                 throw new SQLException("Failed to establish SSH tunnel.");
             }
 
-            populateCollectionsListView();
             
             
         } catch (ClassNotFoundException | SQLException | JSchException e) {
@@ -224,50 +223,4 @@ private void handleLogin(ActionEvent event) {
         alert.showAndWait();
     }
 
-
-
-
-private void populateCollectionsListView() {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT collectionName FROM COLLECTION JOIN createsCollection ON COLLECTION.collectionID = createsCollection.collectionID WHERE createsCollection.user_ID = ?");
-            statement.setString(1, DB_USER);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String collectionName = resultSet.getString("collectionName");
-                collectionsListView.getItems().add(collectionName);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to fetch collections.");
-        }
-    }
-
-    @FXML
-    private void handleCollectionSelection() {
-        String selectedCollection = collectionsListView.getSelectionModel().getSelectedItem();
-        if (selectedCollection != null) {
-            displayCollectionInfo(selectedCollection);
-        }
-    }
-
-    private void displayCollectionInfo(String collectionName) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(movieID), SUM(length) FROM Contains JOIN COLLECTION ON Contains.collectionID = COLLECTION.collectionID JOIN MOVIE ON Contains.movieID = MOVIE.movieID WHERE COLLECTION.collectionName = ?");
-            statement.setString(1, collectionName);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                int movieCount = resultSet.getInt(1);
-                int totalLength = resultSet.getInt(2);
-                int hours = totalLength / 60;
-                int minutes = totalLength % 60;
-                collectionInfoLabel.setText("Number of movies: " + movieCount + "\nTotal length: " + hours + " hours " + minutes + " minutes");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to fetch collection information.");
-        }
-    }
 }

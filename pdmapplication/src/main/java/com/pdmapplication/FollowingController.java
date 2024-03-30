@@ -46,7 +46,7 @@ public class FollowingController {
     public FollowingController(Connection connection) {
         this.connection = connection;
     }
-
+    
 
     @FXML
     public void initialize() {

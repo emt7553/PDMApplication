@@ -19,9 +19,6 @@
       <Button layoutX="274.0" layoutY="420" mnemonicParsing="false" onAction="#handleRegistration" text="Register" />
       <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
       <Button layoutX="274.0" layoutY="200" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-
-      <!--ListView fx:id="collectionsListView" layoutX="226.0" layoutY="240.0" prefHeight="100.0" prefWidth="300.0" onMouseClicked="#handleCollectionSelection" />
-      <!Label fx:id="collectionInfoLabel" layoutX="226.0" layoutY="360.0" prefHeight="30.0" prefWidth="300.0" /-->
    </children>
 </AnchorPane>
 

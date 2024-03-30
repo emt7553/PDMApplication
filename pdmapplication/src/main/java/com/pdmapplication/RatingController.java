@@ -32,6 +32,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+
 public class RatingController {
     @FXML
     private TextField ratingFieldText;
@@ -45,14 +46,18 @@ public class RatingController {
     public Connection connection;
     public int movieID;
     public int collectionID;
+    
     public RatingController(Connection connection) {
         this.connection = connection;
-        this.movieID = movieID;
     }
 
     @FXML
     public void initialize() {
         // Initialize method, you can add initialization code here if needed
+    }
+
+    public void setMovieID(int movieID) {
+        this.movieID = movieID;
     }
 
     @FXML
@@ -110,6 +115,16 @@ public class RatingController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to mark all movies in the collection as watched!");
         }
+    }
+
+    @FXML
+    private void handleWatchButtonAction() {
+        
+            int currentUserId = PrimaryController.currentUserId;
+
+            markAsWatched(movieID, currentUserId);
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Marked movie as watched!");
+        
     }
     private void markAsWatched(int movieID, int userID) {
         try {
