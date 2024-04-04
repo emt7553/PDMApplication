@@ -231,8 +231,3 @@ public class CollectionController {
         alert.showAndWait();
     }
 }
-
-
-
-
-   
