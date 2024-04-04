@@ -58,7 +58,7 @@ public class SecondaryController {
         stage.setScene(scene);
     }
     @FXML
-    private void switchToCollections(ActionEvent event) throws IOException {
+    private void switchToCollection(ActionEvent event) throws IOException {
         MovieController movieController = new MovieController(connection);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("movie.fxml"));
         loader.setController(movieController);
