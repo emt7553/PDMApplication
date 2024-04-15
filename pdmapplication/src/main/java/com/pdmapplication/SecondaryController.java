@@ -58,10 +58,23 @@ public class SecondaryController {
         stage.setScene(scene);
     }
     @FXML
-    private void switchToCollections(ActionEvent event) throws IOException {
+    private void switchToCollection(ActionEvent event) throws IOException {
         MovieController movieController = new MovieController(connection);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("movie.fxml"));
         loader.setController(movieController);
+
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+    @FXML
+    private void switchToProfile(ActionEvent event) throws IOException {
+        ProfileController profileController = new ProfileController(connection);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile.fxml"));
+        loader.setController(profileController);
 
         Parent root = loader.load();
 
