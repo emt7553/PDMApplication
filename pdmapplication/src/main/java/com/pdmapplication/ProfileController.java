@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
@@ -20,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 public class ProfileController {
     @FXML
@@ -49,15 +51,19 @@ public class ProfileController {
                 "Highest Rating", "Most Plays", "Combination"
         ));
         
-        int numberOfCollections = getNumberOfCollections(); // Call a method to get the number of collections
-        collectionsLabel.setText("Collections: " + numberOfCollections);
+        int numberOfCollections = getNumberOfCollections();
+        int numberOfFollowedUsers = getNumberOfFollowedUsers();
+        int numberOfFollowingUsers = getNumberOfFollowingUsers();
+        collectionsLabel.setText(""+numberOfCollections);
+        followedUsersLabel.setText(""+numberOfFollowedUsers);
+        followingUsersLabel.setText(""+numberOfFollowingUsers);
+        findTopMovies(null);
     }
 
     private int getNumberOfCollections() {
         int numberOfCollections = 0;
         try {
-            // Execute a query to get the number of collections for the user
-            String query = "SELECT COUNT(*) FROM collections WHERE user_id = ?";
+            String query = "SELECT COUNT(*) FROM createscollection WHERE user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             int currentUserId = PrimaryController.currentUserId; 
             statement.setInt(1, currentUserId);
@@ -71,14 +77,12 @@ public class ProfileController {
         return numberOfCollections;
     }
 
-    @FXML
     private int getNumberOfFollowedUsers() {
         int numberOfFollowedUsers = 0;
         try {
-            // Execute a query to get the number of followed users for the user
             String query = "SELECT COUNT(*) FROM friendswith WHERE friender_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            int currentUserId = PrimaryController.currentUserId; 
+            int currentUserId = PrimaryController.currentUserId;
             statement.setInt(1, currentUserId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -90,14 +94,12 @@ public class ProfileController {
         return numberOfFollowedUsers;
     }
 
-    @FXML
     private int getNumberOfFollowingUsers() {
         int numberOfFollowingUsers = 0;
         try {
-            // Execute a query to get the number of following users for the user
             String query = "SELECT COUNT(*) FROM friendswith WHERE friendee_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            int currentUserId = PrimaryController.currentUserId; 
+            int currentUserId = PrimaryController.currentUserId;
             statement.setInt(1, currentUserId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -109,67 +111,80 @@ public class ProfileController {
         return numberOfFollowingUsers;
     }
 
+
     @FXML
     private void findTopMovies(ActionEvent event) {
+        sortingCriteriaChoiceBox.setOnAction(this::findTopMovies);
         String sortingCriteria = sortingCriteriaChoiceBox.getValue();
         if (sortingCriteria == null) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Please select a sorting criteria");
             return;
         }
 
         try {
-            // Execute a query to get the user's top 10 movies based on the sorting criteria
-            String query = "SELECT * FROM movies WHERE user_id = ? ORDER BY ";
+            String query = "SELECT m.title FROM movie m " +
+                           "JOIN rates r ON m.movie_id = r.movie_id " +
+                           "JOIN watches w ON m.movie_id = w.movie_id " +
+                           "WHERE r.user_id = ? AND w.user_id = ? " +
+                           "GROUP BY m.title " + 
+                           "ORDER BY ";
             switch (sortingCriteria) {
                 case "Highest Rating":
-                    query += "rating DESC";
+                    query += "MAX(r.starrating) DESC"; 
                     break;
                 case "Most Plays":
-                    query += "plays DESC";
+                    query += "COUNT(w.*) DESC";
                     break;
                 case "Combination":
-                    query += "rating DESC, plays DESC";
+                    query += "MAX(r.starrating) DESC, COUNT(w.*) DESC"; 
                     break;
             }
             query += " LIMIT 10";
 
+
             PreparedStatement statement = connection.prepareStatement(query);
             int currentUserId = PrimaryController.currentUserId;
             statement.setInt(1, currentUserId);
+            statement.setInt(2, currentUserId);
+
             ResultSet resultSet = statement.executeQuery();
 
-            // Clear the existing top movies container
             topMoviesContainer.getChildren().clear();
-
-            // Populate the top movies container with the retrieved movies
             while (resultSet.next()) {
                 String movieTitle = resultSet.getString("title");
                 Label movieLabel = new Label(movieTitle);
                 topMoviesContainer.getChildren().add(movieLabel);
             }
+            sortingCriteriaChoiceBox.setItems(FXCollections.observableArrayList(
+                "Highest Rating", "Most Plays", "Combination"
+            ));
+            sortingCriteriaChoiceBox.setValue(sortingCriteria);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-
+    @FXML
     private void switchToSecondary(ActionEvent event) throws IOException {
         SecondaryController secondaryController = new SecondaryController(connection);
-
+    
         FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
         loader.setController(secondaryController);
+    
         Parent root = loader.load();
+    
         Scene scene = new Scene(root);
+    
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
-
-    @FXML
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+    
+        @FXML
+        private void showAlert(Alert.AlertType type, String title, String content) {
+            Alert alert = new Alert(type);
+            alert.setTitle(title);
+            alert.setContentText(content);
+            alert.showAndWait();
+        }
+    
 }
