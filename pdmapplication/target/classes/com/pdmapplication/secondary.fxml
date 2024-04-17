@@ -12,6 +12,8 @@
         <Button fx:id="secondaryButton" text="Movies" onAction="#switchToMovie" />
         <Button fx:id="secondaryButton" text="Collections" onAction="#switchToCollection" />
         <Button fx:id="secondaryButton" text="Log Out" onAction="#switchToPrimary" />
+        <Button fx:id="secondaryButton" text="MovieRecommendations" onAction="#switchToMovieRecommendation" />
+        
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

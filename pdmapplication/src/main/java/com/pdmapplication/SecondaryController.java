@@ -70,19 +70,6 @@ public class SecondaryController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
-    @FXML
-    private void switchToRecommendation(ActionEvent event) throws IOException {
-        RecommendationController recommendationController = new RecommendationController(connection);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("recommendation.fxml"));
-        loader.setController(recommendationController);
-
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-    }
 
     @FXML
     private void switchToMovieRecommendation(ActionEvent event) throws IOException {

@@ -12,7 +12,6 @@
         <Button fx:id="secondaryButton" text="Movies" onAction="#switchToMovie" />
         <Button fx:id="secondaryButton" text="Collections" onAction="#switchToCollection" />
         <Button fx:id="secondaryButton" text="Log Out" onAction="#switchToPrimary" />
-        <Button fx:id="secondaryButton" text="Recommendations" onAction="#switchToRecommendation" />
         <Button fx:id="secondaryButton" text="MovieRecommendations" onAction="#switchToMovieRecommendation" />
         
     </children>
