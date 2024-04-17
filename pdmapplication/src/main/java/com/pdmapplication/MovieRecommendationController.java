@@ -59,9 +59,6 @@ public class MovieRecommendationController {
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
                 top20MostPopularLast90DaysListView.getItems().add(title);
-
-                System.out.println("title: " + title);
-                System.out.flush();
             }
 
             statement.close();
