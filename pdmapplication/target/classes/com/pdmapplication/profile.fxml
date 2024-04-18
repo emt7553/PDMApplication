@@ -9,7 +9,6 @@
 <?import javafx.collections.ObservableList?>
 
 <VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" prefWidth="400" prefHeight="600">
-    <Button fx:id="secondaryButton" text="Back to Menu" onAction="#switchToSecondary" />
 
     <Label text="Number of Collections: " />
     <Label fx:id="collectionsLabel" />
@@ -32,4 +31,6 @@
             </items>
         </ChoiceBox>
     </VBox>
+
+     <Button fx:id="secondaryButton" text="Back to Menu" onAction="#switchToSecondary" />
 </VBox>
