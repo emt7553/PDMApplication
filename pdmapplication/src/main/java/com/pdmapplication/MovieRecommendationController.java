@@ -10,6 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import java.io.IOException;
+import javafx.event.ActionEvent;
+
 
 public class MovieRecommendationController {
 
@@ -58,7 +66,6 @@ public class MovieRecommendationController {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
-            // Display the result in the ListView
             top20MostPopularLast90DaysListView.getItems().clear();
 
 
@@ -108,28 +115,34 @@ public class MovieRecommendationController {
 
     private void loadTop5LatestReleases() {
         try {
-            // Query for the top 5 latest releases of the month
-            String query = "SELECT m.movie_id, m.title, r.release_year " +
-                           "FROM movie m JOIN released r ON m.movie_id = r.movie_id " +
-                           "ORDER BY r.release_year DESC LIMIT 5;";
+            // Query for the top 5 most popular releases
+            String query = "SELECT m.movie_id, m.title, COUNT(w.user_id) AS watch_count " +
+                           "FROM movie m " +
+                           "JOIN watches w ON m.movie_id = w.movie_id " +
+                           "JOIN released r ON m.movie_id = r.movie_id " +
+                           "GROUP BY m.movie_id, m.title " +
+                           "ORDER BY watch_count DESC " +
+                           "LIMIT 5;";
+    
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-
+    
             // Display the result in the ListView
             top5LatestReleasesListView.getItems().clear();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
                 top5LatestReleasesListView.getItems().add(title);
             }
-
+    
             statement.close();
             resultSet.close();
-
+    
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load top 5 latest releases of the month.");
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load top 5 most popular releases.");
         }
     }
+    
 
     private void loadRecommendationsForYou() {
         try {
@@ -165,6 +178,23 @@ public class MovieRecommendationController {
 
     
     }
+
+    @FXML
+    private void switchToSecondary(ActionEvent event) throws IOException {
+        SecondaryController secondaryController = new SecondaryController(connection);
+    
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
+        loader.setController(secondaryController);
+    
+        Parent root = loader.load();
+    
+        Scene scene = new Scene(root);
+    
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+    
+        
 
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
