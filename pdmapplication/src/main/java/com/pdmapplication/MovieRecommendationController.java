@@ -142,7 +142,7 @@ public class MovieRecommendationController {
                            "WHERE w.user_id = 1 " +
                            "GROUP BY m.movie_id, m.title " +
                            "HAVING COUNT(w.user_id) > 0 " +
-                           "ORDER BY COUNT(w.user_id) DESC LIMIT 5;";
+                           "ORDER BY COUNT(w.user_id) DESC LIMIT 10;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
