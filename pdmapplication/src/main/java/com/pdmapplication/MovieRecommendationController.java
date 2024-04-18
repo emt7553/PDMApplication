@@ -116,12 +116,12 @@ public class MovieRecommendationController {
     private void loadTop5LatestReleases() {
         try {
             // Query for the top 5 most popular releases
-            String query = "SELECT m.movie_id, m.title, COUNT(w.user_id) AS watch_count " +
+            String query = "SELECT m.movie_id, m.title, COUNT(w.user_id) AS watch_count, r.release_year " +
                            "FROM movie m " +
                            "JOIN watches w ON m.movie_id = w.movie_id " +
                            "JOIN released r ON m.movie_id = r.movie_id " +
-                           "GROUP BY m.movie_id, m.title " +
-                           "ORDER BY watch_count DESC " +
+                           "GROUP BY m.movie_id, m.title, r.release_year " +
+                           "ORDER BY watch_count DESC, r.release_year DESC " +
                            "LIMIT 5;";
     
             PreparedStatement statement = connection.prepareStatement(query);
