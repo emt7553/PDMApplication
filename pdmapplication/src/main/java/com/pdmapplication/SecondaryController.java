@@ -73,7 +73,9 @@ public class SecondaryController {
 
     @FXML
     private void switchToMovieRecommendation(ActionEvent event) throws IOException {
+        MovieRecommendationController movieRecommendationController = new MovieRecommendationController(connection);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MovieRecommendation.fxml"));
+        loader.setController(movieRecommendationController);
         Parent root = loader.load();
         
         // Create a new Scene with the loaded root
