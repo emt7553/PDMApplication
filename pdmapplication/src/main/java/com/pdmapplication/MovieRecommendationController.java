@@ -2,18 +2,9 @@ package com.pdmapplication;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.event.ActionEvent;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,28 +17,16 @@ public class MovieRecommendationController {
     private TabPane tabPane;
 
     @FXML
-    private VBox top20MostPopularLast90DaysListView;
+    private ListView<String> top20MostPopularLast90DaysListView;
 
     @FXML
-    private VBox top20MostPopularFollowersListView;
+    private ListView<String> top20MostPopularFollowersListView;
 
     @FXML
-    private VBox top5LatestReleasesListView;
-    
+    private ListView<String> top5LatestReleasesListView;
+
     @FXML
-    private VBox recommendationsForYouListView;
-
-    // @FXML
-    // private ListView<String> top20MostPopularLast90DaysListView;
-
-    // @FXML
-    // private ListView<String> top20MostPopularFollowersListView;
-
-    // @FXML
-    // private ListView<String> top5LatestReleasesListView;
-
-    // @FXML
-    // private ListView<String> recommendationsForYouListView;
+    private ListView<String> recommendationsForYouListView;
 
     private Connection connection;
 
@@ -58,7 +37,6 @@ public class MovieRecommendationController {
 
     @FXML
     public void initialize() {
-        System.out.println("working");
         loadTop20MostPopularLast90Days();
         loadTop20MostPopularFollowers();
         loadTop5LatestReleases();
@@ -66,32 +44,26 @@ public class MovieRecommendationController {
     }
 
     private void loadTop20MostPopularLast90Days() {
-        
         try {
             // Query for the top 20 most popular movies in the last 90 days
             String query = "SELECT m.movie_id, m.title, r.release_year " +
                            "FROM movie m JOIN released r ON m.movie_id = r.movie_id " +
                            "ORDER BY r.release_year DESC LIMIT 20;";
-
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-          
 
             // Display the result in the ListView
-            // top20MostPopularLast90DaysListView.getChildren().clear();
+            top20MostPopularLast90DaysListView.getItems().clear();
 
 
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                Label movieLabel = new Label(title);
-                System.out.println("result set: " + title);
-                top20MostPopularLast90DaysListView.getChildren().add(movieLabel);
-                
-                System.out.println(title);
+                top20MostPopularLast90DaysListView.getItems().add(title);
             }
 
-            // statement.close();
-            // resultSet.close();     
+            statement.close();
+            resultSet.close();
+                
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,15 +86,14 @@ public class MovieRecommendationController {
             ResultSet resultSet = statement.executeQuery();
 
             // Display the result in the ListView
-            top20MostPopularFollowersListView.getChildren().clear();
+            top20MostPopularFollowersListView.getItems().clear();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                Label movieLabel = new Label(title);
-                top20MostPopularFollowersListView.getChildren().add(movieLabel);
+                top20MostPopularFollowersListView.getItems().add(title);
             }
 
-            // statement.close();
-            // resultSet.close();
+            statement.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,15 +111,14 @@ public class MovieRecommendationController {
             ResultSet resultSet = statement.executeQuery();
 
             // Display the result in the ListView
-            top5LatestReleasesListView.getChildren().clear();
+            top5LatestReleasesListView.getItems().clear();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                Label movieLabel = new Label(title);
-                top5LatestReleasesListView.getChildren().add(movieLabel);
+                top5LatestReleasesListView.getItems().add(title);
             }
 
-            // statement.close();
-            // resultSet.close();
+            statement.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,15 +141,14 @@ public class MovieRecommendationController {
             ResultSet resultSet = statement.executeQuery();
 
             // Display the result in the ListView
-            recommendationsForYouListView.getChildren().clear();
+            recommendationsForYouListView.getItems().clear();
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                Label movieLabel = new Label(title);
-                recommendationsForYouListView.getChildren().add(movieLabel);
+                recommendationsForYouListView.getItems().add(title);
             }
 
-            // statement.close();
-            // resultSet.close();
+            statement.close();
+            resultSet.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -188,8 +157,6 @@ public class MovieRecommendationController {
 
     
     }
-
-
 
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
