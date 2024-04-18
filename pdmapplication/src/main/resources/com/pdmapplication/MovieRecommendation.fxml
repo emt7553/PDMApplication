@@ -10,7 +10,7 @@
         <Tab text="Top 20 Most Popular (Last 90 Days)">
             <ListView fx:id="top20MostPopularLast90DaysListView" prefHeight="360.0" prefWidth="580.0"/>
         </Tab>
-        <Tab text="Top 20 Most Popular (Followers)">
+        <Tab text="Top Most Popular (Followers)">
             <ListView fx:id="top20MostPopularFollowersListView" prefHeight="360.0" prefWidth="580.0"/>
         </Tab>
         <Tab text="Top 5 Latest Releases">
