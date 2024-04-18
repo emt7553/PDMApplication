@@ -3,23 +3,25 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    
-    <TabPane fx:id="tabPane" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0">
-        <Tab text="Top 20 Most Popular (Last 90 Days)">
-            <ListView fx:id="top20MostPopularLast90DaysListView" prefHeight="360.0" prefWidth="580.0"/>
-        </Tab>
-        <Tab text="Top 20 Most Popular (Followers)">
-            <ListView fx:id="top20MostPopularFollowersListView" prefHeight="360.0" prefWidth="580.0"/>
-        </Tab>
-        <Tab text="Top 5 Latest Releases">
-            <ListView fx:id="top5LatestReleasesListView" prefHeight="360.0" prefWidth="580.0"/>
-        </Tab>
-        <Tab text="For You">
-            <ListView fx:id="recommendationsForYouListView" prefHeight="360.0" prefWidth="580.0"/>
-        </Tab>
-    </TabPane>
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" prefWidth="400" prefHeight="600">
 
-</AnchorPane>
+    <Label  text="top 20 last 90: " />
+    <VBox fx:id="top20MostPopularLast90DaysListView"> </VBox>
+
+    <Label  text="top 20 most popular following: " />
+    <VBox fx:id="top20MostPopularFollowersListView"> </VBox>
+
+    <Label  text="top 5 latest" />
+    <VBox fx:id="top5LatestReleasesListView"> </VBox>
+
+    <Label  text="recommendation for you: " />
+    <VBox fx:id="recommendationsForYouListView"> </VBox>
+       
+
+</VBox>
+
 
