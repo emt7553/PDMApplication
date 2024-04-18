@@ -85,7 +85,6 @@ public class MovieRecommendationController {
             String query = "SELECT m.movie_id, m.title, COUNT(w.user_id) AS watch_count " +
                            "FROM movie m JOIN watches w ON m.movie_id = w.movie_id " +
                            "JOIN friendsWith f ON w.user_id = f.friendee_id " +
-                           "WHERE f.friender_id = 8 " +
                            "GROUP BY m.movie_id, m.title " +
                            "ORDER BY watch_count DESC LIMIT 20;";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -139,11 +138,14 @@ public class MovieRecommendationController {
                            "FROM movie m JOIN hasgenre hg ON m.movie_id = hg.movie_id " +
                            "JOIN genre g ON hg.genre_id = g.genre_id " +
                            "JOIN watches w ON m.movie_id = w.movie_id " +
-                           "WHERE w.user_id = 1 " +
+                           "WHERE w.user_id = ? " +
                            "GROUP BY m.movie_id, m.title " +
                            "HAVING COUNT(w.user_id) > 0 " +
                            "ORDER BY COUNT(w.user_id) DESC LIMIT 10;";
             PreparedStatement statement = connection.prepareStatement(query);
+            
+            int currentUserId = PrimaryController.currentUserId; 
+            statement.setInt(1, currentUserId);
             ResultSet resultSet = statement.executeQuery();
 
             // Display the result in the ListView
