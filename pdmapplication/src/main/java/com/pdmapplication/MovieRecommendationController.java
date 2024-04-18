@@ -46,9 +46,16 @@ public class MovieRecommendationController {
     private void loadTop20MostPopularLast90Days() {
         try {
             // Query for the top 20 most popular movies in the last 90 days
-            String query = "SELECT m.movie_id, m.title, r.release_year " +
-                           "FROM movie m JOIN released r ON m.movie_id = r.movie_id " +
-                           "ORDER BY r.release_year DESC LIMIT 20;";
+            String query = "SELECT m.movie_id, m.title, COUNT(w.user_id) AS watch_count " +
+                            "FROM movie m " +
+                            "JOIN watches w ON m.movie_id = w.movie_id " +
+                            "JOIN released r ON m.movie_id = r.movie_id " +
+                            "WHERE w.watchtime >= (CURRENT_DATE - INTERVAL '90 days') " +
+                            "AND w.watchtime <= CURRENT_DATE " +
+                            "GROUP BY m.movie_id, m.title " +
+                            "ORDER BY watch_count DESC " +
+                            "LIMIT 20;";
+
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
