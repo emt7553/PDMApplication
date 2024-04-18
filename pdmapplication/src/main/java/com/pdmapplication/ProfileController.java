@@ -1,3 +1,6 @@
+
+//Author: Alex Tefft
+
 package com.pdmapplication;
 
 import javafx.collections.FXCollections;

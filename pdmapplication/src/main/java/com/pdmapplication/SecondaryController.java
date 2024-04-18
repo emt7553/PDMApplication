@@ -72,6 +72,21 @@ public class SecondaryController {
     }
 
     @FXML
+    private void switchToProfile(ActionEvent event) throws IOException {
+        ProfileController profileController = new ProfileController(connection);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile.fxml"));
+        loader.setController(profileController);
+
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+
+
+    @FXML
     private void switchToMovieRecommendation(ActionEvent event) throws IOException {
         MovieRecommendationController movieRecommendationController = new MovieRecommendationController(connection);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MovieRecommendation.fxml"));
@@ -84,5 +99,6 @@ public class SecondaryController {
         
         stage.setScene(scene);
     }
+
 
 }

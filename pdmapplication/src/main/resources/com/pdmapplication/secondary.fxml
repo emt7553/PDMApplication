@@ -8,11 +8,13 @@
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label text="Secondary View" />
-        <Button fx:id="secondaryButton" text="Follow Manager" onAction="#switchToFollowing" />
-        <Button fx:id="secondaryButton" text="Movies" onAction="#switchToMovie" />
-        <Button fx:id="secondaryButton" text="Collections" onAction="#switchToCollection" />
-        <Button fx:id="secondaryButton" text="Log Out" onAction="#switchToPrimary" />
-        <Button fx:id="secondaryButton" text="MovieRecommendations" onAction="#switchToMovieRecommendation" />
+        <Button fx:id="secondaryButton1" text="Follow Manager" onAction="#switchToFollowing" />
+        <Button fx:id="secondaryButton2" text="Movies" onAction="#switchToMovie" />
+        <Button fx:id="secondaryButton3" text="Collections" onAction="#switchToCollection" />
+        <Button fx:id="secondaryButton4" text="Profile" onAction="#switchToProfile" />
+        <Button fx:id="secondaryButton5" text="MovieRecommendations" onAction="#switchToMovieRecommendation" />
+        <Button fx:id="secondaryButton6" text="Log Out" onAction="#switchToPrimary" />
+
         
     </children>
     <padding>
