@@ -25,9 +25,16 @@ public class MovieRecommendationController {
     @FXML
     private TabPane tabPane;
 
+    @FXML
     private VBox top20MostPopularLast90DaysListView;
+
+    @FXML
     private VBox top20MostPopularFollowersListView;
+
+    @FXML
     private VBox top5LatestReleasesListView;
+    
+    @FXML
     private VBox recommendationsForYouListView;
 
     // @FXML
@@ -51,7 +58,6 @@ public class MovieRecommendationController {
 
     @FXML
     public void initialize() {
-        showAlert(Alert.AlertType.ERROR, "ResultSet", "start");
         System.out.println("working");
         loadTop20MostPopularLast90Days();
         loadTop20MostPopularFollowers();
@@ -63,18 +69,13 @@ public class MovieRecommendationController {
         
         try {
             // Query for the top 20 most popular movies in the last 90 days
-            showAlert(Alert.AlertType.ERROR, "ResultSet", "1");
             String query = "SELECT m.movie_id, m.title, r.release_year " +
                            "FROM movie m JOIN released r ON m.movie_id = r.movie_id " +
                            "ORDER BY r.release_year DESC LIMIT 20;";
-            showAlert(Alert.AlertType.ERROR, "ResultSet", "2");
-            System.out.println("Print query test 1");
+
             PreparedStatement statement = connection.prepareStatement(query);
-            showAlert(Alert.AlertType.ERROR, "ResultSet", "3");
             ResultSet resultSet = statement.executeQuery();
-            showAlert(Alert.AlertType.ERROR, "ResultSet", "4");
-            System.out.println("result set: " + resultSet);
-            showAlert(Alert.AlertType.ERROR, "ResultSet", "wokign");
+          
 
             // Display the result in the ListView
             // top20MostPopularLast90DaysListView.getChildren().clear();
@@ -82,11 +83,9 @@ public class MovieRecommendationController {
 
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
-                showAlert(Alert.AlertType.ERROR, "ResultSet", "loop");
                 Label movieLabel = new Label(title);
-                showAlert(Alert.AlertType.ERROR, "ResultSet", "add");
+                System.out.println("result set: " + title);
                 top20MostPopularLast90DaysListView.getChildren().add(movieLabel);
-                showAlert(Alert.AlertType.ERROR, "ResultSet", "afteradd");
                 
                 System.out.println(title);
             }

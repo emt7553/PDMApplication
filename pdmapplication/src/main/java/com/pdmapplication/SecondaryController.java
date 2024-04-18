@@ -78,13 +78,10 @@ public class SecondaryController {
         loader.setController(movieRecommendationController);
         Parent root = loader.load();
         
-        // Create a new Scene with the loaded root
         Scene scene = new Scene(root);
-        
-        // Get the current stage from the event source
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
-        // Set the scene for the stage
         stage.setScene(scene);
     }
 
