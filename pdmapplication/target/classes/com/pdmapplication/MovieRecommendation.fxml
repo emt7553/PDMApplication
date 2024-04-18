@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    
+    <TabPane fx:id="tabPane" layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0">
+        <Tab text="Top 20 Most Popular (Last 90 Days)">
+            <ListView fx:id="top20MostPopularLast90DaysListView" prefHeight="360.0" prefWidth="580.0"/>
+        </Tab>
+        <Tab text="Top 20 Most Popular (Followers)">
+            <ListView fx:id="top20MostPopularFollowersListView" prefHeight="360.0" prefWidth="580.0"/>
+        </Tab>
+        <Tab text="Top 5 Latest Releases">
+            <ListView fx:id="top5LatestReleasesListView" prefHeight="360.0" prefWidth="580.0"/>
+        </Tab>
+        <Tab text="For You">
+            <ListView fx:id="recommendationsForYouListView" prefHeight="360.0" prefWidth="580.0"/>
+        </Tab>
+    </TabPane>
+
+</AnchorPane>
+
+
